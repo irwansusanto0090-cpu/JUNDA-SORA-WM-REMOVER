@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Github } from 'lucide-react';
+import { Zap } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   return (
@@ -14,20 +14,6 @@ const Navbar: React.FC = () => {
           </h1>
           <p className="text-[10px] md:text-xs text-sora-accent font-medium tracking-wider">WM BY JUNDA</p>
         </div>
-      </div>
-      
-      <div className="hidden md:flex gap-6 items-center">
-        <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-medium">How it works</a>
-        <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-medium">Features</a>
-        <a 
-          href="https://github.com" 
-          target="_blank" 
-          rel="noreferrer"
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm"
-        >
-          <Github className="w-4 h-4" />
-          <span>Star on GitHub</span>
-        </a>
       </div>
     </nav>
   );

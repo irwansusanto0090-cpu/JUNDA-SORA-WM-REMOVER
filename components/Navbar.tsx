@@ -10,9 +10,9 @@ const Navbar: React.FC = () => {
         </div>
         <div>
           <h1 className="text-lg md:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-            SORA Remover
+            TEXA Downloader
           </h1>
-          <p className="text-[10px] md:text-xs text-sora-accent font-medium tracking-wider">WM BY JUNDA</p>
+          <p className="text-[10px] md:text-xs text-sora-accent font-medium tracking-wider">BY TEKNO X AURORA</p>
         </div>
       </div>
     </nav>

@@ -1,28 +1,19 @@
 export interface SoraRequest {
   videoUrl: string;
+  title: string;
+  duration: number;
 }
 
-export interface SoraResponse {
-  code?: number;
-  msg?: string;
-  message?: string;
-  data?: {
-    url?: string;
-    video?: string;
-    cover?: string;
-    [key: string]: any;
-  } | string;
-  url?: string;
-  video_url?: string;
-  link?: string;
-  status?: string | number;
-  [key: string]: any;
+export interface SnapSoraResponse {
+  download_link: string;
 }
 
 export interface ProcessedVideo {
   url: string;
+  downloadUrl?: string;
   thumbnail?: string;
   originalUrl: string;
+  resolution?: string;
 }
 
 export interface ApiError {

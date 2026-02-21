@@ -10,6 +10,7 @@ import { Link2, Loader2, AlertCircle } from 'lucide-react';
 const App: React.FC = () => {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ProcessedVideo | null>(null);
 
@@ -17,18 +18,13 @@ const App: React.FC = () => {
     e.preventDefault();
     if (!url) return;
     
-    // Basic validation
-    if (!url.toLowerCase().includes('sora') && !url.toLowerCase().includes('http')) {
-      setError("Please enter a valid video URL.");
-      return;
-    }
-
     setLoading(true);
     setError(null);
     setResult(null);
+    setStatusMsg('Connecting...');
 
     try {
-      const data = await removeWatermark(url);
+      const data = await removeWatermark(url, (msg) => setStatusMsg(msg));
       setResult(data);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -38,6 +34,7 @@ const App: React.FC = () => {
       }
     } finally {
       setLoading(false);
+      setStatusMsg('');
     }
   };
 
@@ -62,7 +59,7 @@ const App: React.FC = () => {
                 </span>
               </h1>
               <p className="text-gray-300 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-                Paste your Sora link below to instantly generate a clean, watermark-free version of your AI masterpiece.
+                Professional tools by Texa Downloader using Texa Engine. Paste your Sora link to get a clean video.
               </p>
             </div>
 
@@ -76,7 +73,7 @@ const App: React.FC = () => {
                     type="url"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
-                    placeholder="https://sora.chatgpt.com/p/..."
+                    placeholder="Paste Sora URL (e.g. https://sora.chatgpt.com/p/...)"
                     className="w-full pl-11 pr-4 py-4 bg-black/40 border border-white/5 focus:border-sora-primary/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sora-primary/20 transition-all text-sm md:text-base"
                     required
                   />
@@ -87,22 +84,28 @@ const App: React.FC = () => {
                   className="px-6 md:px-8 py-4 bg-gradient-to-r from-sora-primary to-sora-secondary hover:brightness-110 rounded-xl font-bold text-white shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                 >
                   {loading ? (
-                    <>
+                    <div className="flex flex-col items-center">
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      <span className="hidden md:inline">Processing</span>
-                    </>
+                    </div>
                   ) : (
                     "Remove WM"
                   )}
                 </button>
               </form>
+              
+              {loading && statusMsg && (
+                <div className="mt-4 animate-pulse flex items-center justify-center gap-2 text-sora-accent text-sm font-medium">
+                  <div className="w-2 h-2 bg-sora-accent rounded-full animate-bounce" />
+                  {statusMsg}
+                </div>
+              )}
             </div>
 
             {error && (
               <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex items-start gap-3 text-left max-w-xl mx-auto animate-in fade-in slide-in-from-top-2 backdrop-blur-sm">
                 <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-red-500 font-semibold text-sm">Error Processing Video</h4>
+                  <h4 className="text-red-500 font-semibold text-sm">Processing Error</h4>
                   <p className="text-red-400/80 text-xs mt-1 leading-relaxed">{error}</p>
                 </div>
               </div>
